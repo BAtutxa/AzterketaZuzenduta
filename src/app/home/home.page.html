@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Cuestionario
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Leer todas las preguntas del cuestionario-->
+  <ion-list>
+    <ion-item *ngFor="let item of this.cs.getPreguntas()">
+      <!-- añadir el logotipo -->
+       <ion-img src={{item.logotipo}}></ion-img>
+      <!-- Añadir ion-badge para el caso de acertar la respuesta, contador de intentos y mostrar todos los intentos incorrectos
+      -- 2-Si se falla: Poner color danger y mostrarlo a la derecha de la página (ver-> slot)
+      -- 3-Si hay intentos incorrectos, mostrarlos con color warning y mostrarlo a la derecha de la página (ver-> slot)
+      -->
+        <ion-badge *ngIf="item.acierto==true">{{item.respuesta}}</ion-badge>
+        <ion-badge *ngIf="item.acierto==false" color="danger">{{item.intentos}}</ion-badge>
+        <ion-badge *ngIf="item.intentos==undefined" color="warning" slot="end">Intentos incorrectos</ion-badge>
+      <!-- Añadir botón para responder mediante un-->
+      <ion-button (click)="respuesta(item)">RESPONDER</ion-button>
+    </ion-item>
+  </ion-list>
+  <!--Botón de guardar el cuestionario-->
+  <ion-button (click)="guardar()">GUARDAR CUESTIONARIO</ion-button>
+</ion-content>
