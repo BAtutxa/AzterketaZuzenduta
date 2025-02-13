@@ -1,10 +1,4 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Cuestionario
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-goiburukoa titulua="Galdetegia"></app-goiburukoa>
 
 <ion-content [fullscreen]="true">
   <!-- Leer todas las preguntas del cuestionario-->
@@ -16,11 +10,11 @@
       -- 2-Si se falla: Poner color danger y mostrarlo a la derecha de la página (ver-> slot)
       -- 3-Si hay intentos incorrectos, mostrarlos con color warning y mostrarlo a la derecha de la página (ver-> slot)
       -->
-        <ion-badge *ngIf="item.acierto==true">{{item.respuesta}}</ion-badge>
-        <ion-badge *ngIf="item.acierto==false" color="danger">{{item.intentos}}</ion-badge>
-        <ion-badge *ngIf="item.intentos==undefined" color="warning" slot="end">Intentos incorrectos</ion-badge>
+        <ion-badge *ngIf="item.acierto==true" slot="end">{{item.respuesta}}</ion-badge>
+        <ion-badge slot="end" *ngIf="item.intentos<0" color="danger">{{item.intentos}}</ion-badge>
+        <ion-badge slot="end" *ngIf="item.intentos<0" color="warning" slot="end">{{item.respuestasIncorrectas.toString()}}</ion-badge>
       <!-- Añadir botón para responder mediante un-->
-      <ion-button (click)="respuesta(item)">RESPONDER</ion-button>
+      <ion-button (click)="respuesta(item)" slot="end">RESPONDER</ion-button>
     </ion-item>
   </ion-list>
   <!--Botón de guardar el cuestionario-->

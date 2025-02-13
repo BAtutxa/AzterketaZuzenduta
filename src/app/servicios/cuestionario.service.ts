@@ -31,7 +31,12 @@ export class CuestionarioService {
     let fitx : Observable<IPregunta[]>;
     fitx=this.httpCliente.get<IPregunta[]>("/assets/datos/datos.json");
     fitx.subscribe(info => {
-      this.preguntas.push(...info);
+      this.preguntas.push(...info);  
+      for (let i=0;i<this.preguntas.length;i++){
+        this.preguntas[i].acierto=false;
+        this.preguntas[i].respuestasIncorrectas=[];
+        this.preguntas[i].intentos=0;
+      }
     });
   }
 
@@ -42,13 +47,13 @@ export class CuestionarioService {
   // 2.2- Guardará el valor añadido en el array respuestasIncorrectas
   async presentAlert(pregunta:IPregunta){
     const alert = await this.alertController.create({
-      header:'¿De qué marca es este logotipo?',
+      header:'¿Zein markakoa da logotipoa?',
       inputs:[{
         name:'resp',
         type:'text',
-        placeholder:'Atención a la ortografía'
+        placeholder:'Zaindu ortografia'
       }],
-      buttons:[{text:'ENVIAR', 
+      buttons:[{text:'BIDALI', 
         handler:(data)=>{
           this.comprobarRespuesta(data.resp, pregunta);
         }
@@ -58,13 +63,14 @@ export class CuestionarioService {
   }
 
   comprobarRespuesta(resp:string, pregunta:IPregunta){
+    console.log("preguntas: "+pregunta.respuesta);
+    console.log("respuesta: "+resp);
+    console.log("respuestas: "+this.preguntas[0]);
     let index=this.preguntas.indexOf(pregunta);
-    if (pregunta.respuesta==resp){
-      if (this.preguntas[index].acierto==null){
-        this.preguntas[index].acierto==true;
-      }
+    if (pregunta.respuesta===resp){
+      this.preguntas[index].acierto=true;
     }else{
-      this.preguntas[index].intentos++;
+      this.preguntas[index].intentos--;
       this.preguntas[index].respuestasIncorrectas.push(resp);
     }
   }

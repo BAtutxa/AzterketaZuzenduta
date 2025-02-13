@@ -18,6 +18,7 @@ export class HomePage {
   //Crear método para gestionar el onclick de RESPONDER
   //Recibirá un IPregunta y llamará al servicio para realizar las operaciones necesarias.
   respuesta(respuesta:IPregunta){
+    console.log(respuesta);
     this.cs.presentAlert(respuesta);
   }
 
